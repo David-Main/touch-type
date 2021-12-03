@@ -46,5 +46,17 @@ header .title-sub {
   height: 0;
   color: var(--gray);
   border-top: 0.45rem dotted var(--gray);
-  /* box-shadow: 0 0 transparent; */
+}
+
+.section-metrics {
+  display: flex;
+  gap: 2rem;
+  padding: 3em 3em;
+}
+.metric {
+  text-align: center;
+  border: 1px solid var(--gray);
+  padding: 1.5em;
+  border-radius: 2rem;
+  width: 7em;
 }
