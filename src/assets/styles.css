@@ -6,6 +6,8 @@
   */
   --base-font-size: 1rem;
   --gray: #4c6174;
+  --gray1: #a1a8af;
+  --blue: #1761aa;
 
   margin: 0;
   padding: 0;
@@ -59,4 +61,39 @@ header .title-sub {
   padding: 1.5em;
   border-radius: 2rem;
   width: 7em;
+}
+
+.input-area {
+  /* border: 1px solid salmon; */
+  box-shadow: 0 0 0.7rem -0.4rem var(--gray);
+  height: 5rem;
+  display: flex;
+  grid-template-columns: auto 1rem 1fr;
+  padding: 1rem 0;
+  align-items: center;
+}
+
+.input-area * {
+  font-family: "Inconsolata";
+  font-size: calc(var(--base-font-size) * 1.8);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+#typing {
+  border: none;
+  color: var(--blue);
+}
+#typing:focus {
+  outline: none;
+}
+.typed {
+  text-decoration: line-through;
+  color: var(--gray1);
+}
+.untyped {
+  min-width: 50%;
+  justify-content: flex-start;
 }

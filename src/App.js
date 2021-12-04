@@ -1,5 +1,6 @@
 import PageHeader from "./elements/Header";
 import Metric from "./components/metric";
+import InputArea from "./containers/inputArea";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <Metric value={0} unit={"words/min"} />
         <Metric value={0} unit={"chars/min"} />
       </section>
+      <InputArea />
     </div>
   );
 };
