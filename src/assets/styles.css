@@ -69,7 +69,6 @@ header .title-sub {
   box-shadow: 0 0 0.7rem -0.4rem var(--gray);
   height: 5rem;
   display: flex;
-  grid-template-columns: 1fr 1rem 1fr;
   padding: 1rem 0;
   align-items: center;
   overflow: hidden;
@@ -92,6 +91,9 @@ header .title-sub {
 }
 .typed {
   min-width: 2rem;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 .typed .word {
   color: var(--gray1);
