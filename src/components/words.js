@@ -1,13 +1,23 @@
 const Words = (props) => {
   return (
     <p className={`words  ${props.class}`}>
-      {props.words.split(" ").map((word) => {
-        if (!word.indexOf("/*wrong*/")) {
+      {props.words.split(" ").map((word, index) => {
+        if (word.length > 0) {
+          if (!word.indexOf("/*0*/")) {
+            return (
+              <span key={index} className="word wrong">
+                {word.replace("/*0*/", "")}
+              </span>
+            );
+          }
           return (
-            <span className="word wrong">{word.replace("/*wrong*/", "")}</span>
+            <span key={index} className="word">
+              {word}
+            </span>
           );
+        } else {
+          return <span key={new Date().getTime().toString()}></span>;
         }
-        return <span className="word">{word}</span>;
       })}
     </p>
   );

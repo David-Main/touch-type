@@ -28,17 +28,34 @@ class InputArea extends Component {
     this.setState({ activeWord: this.state.words.split(" ")[0] });
   }
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.state.typedWords !== prevState.typedWords &&
-      this.state.input === prevState.input
-    ) {
+    if (this.state.typedWords !== prevState.typedWords) {
       //clear Input
       this.setState({ validInput: false, input: "" });
 
       // reset activeWord;
-      this.setState({ activeWord: this.state.words.split(" ")[1] });
-      // this.setState({ words: this.state.words.trimStart() });
-    } else if (this.state.input !== prevState.input) {
+      this.setActiveWord().then(() => {
+        if (
+          this.state.validInput === false &&
+          this.state.words.indexOf(this.state.activeWord) !== 0
+        ) {
+          // start words from active word
+          this.setState({
+            words: prevState.words
+              .slice(prevState.words.indexOf(`${this.state.activeWord}`))
+              .trimStart(),
+          });
+        }
+        if (this.state.activeWord === undefined) {
+          this.setState({ words: "", activeWord: "" });
+        }
+      });
+
+      // set typed words from props;
+      this.props.onType(this.state.typedWords);
+    } else if (
+      this.state.input !== prevState.input &&
+      this.state.words.length > 0
+    ) {
       // update size of input
       this.adjustInputSize();
 
@@ -56,6 +73,9 @@ class InputArea extends Component {
     });
   }
 
+  async setActiveWord() {
+    this.setState({ activeWord: this.state.words.split(" ")[1] });
+  }
   editWords() {
     if (this.state.validInput) {
       this.setState({
@@ -68,7 +88,6 @@ class InputArea extends Component {
     }
   }
   addTypedWord() {
-    console.log("adding");
     if (this.state.input.length) {
       // input has value
       if (this.state.input === this.state.activeWord) {
@@ -77,13 +96,13 @@ class InputArea extends Component {
         });
       } else {
         this.setState({
-          typedWords: `${this.state.typedWords} /*wrong*/${this.state.input}`,
+          typedWords: `${this.state.typedWords} /*0*/${this.state.input}`,
         });
       }
     } else {
       // input is empty
       this.setState({
-        typedWords: `${this.state.typedWords} /*wrong*/${this.state.activeWord}`,
+        typedWords: `${this.state.typedWords} /*0*/${this.state.activeWord}`,
       });
     }
   }
