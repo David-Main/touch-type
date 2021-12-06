@@ -4,33 +4,55 @@ import Metric from "../components/metric"
 import Words from "../components/words";
 import InputArea from "./inputArea";
 import Sample from "../data/words"; 
+import Outro from "../components/outro";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = { 
+      started: false,
       words: Sample,
       inputValue: "",
       isValidInput: false,
       activeWord: "",
       typed: "",
-      lastTyped: true
+      lastTyped: true,
+      correctlyTyped: "",
+      time: 60,
+      cpm: 0,
+      wpm: 0,
     }; 
-
+    let timer;
     this.handleChange = this.handleChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
+    this.editWords = this.editWords.bind(this);
   } 
   componentDidMount(){
     this.setState({activeWord: this.state.words.split(" ")[0]})
   }
   componentDidUpdate(prevProps, prevState){
-
+    if(this.state.time === 0){
+      clearInterval(this.timer)
+      this.playOutro();
+    }
     if(prevState.inputValue !== this.state.inputValue){
       this.validateInput().then( () =>{  
         this.editWords();
       }) 
     }
+    if (prevState.typed !== this.state.typed && this.state.lastTyped){
+      this.setState({
+        correctlyTyped: this.state.correctlyTyped + prevState.activeWord + " ",
+        cpm: (this.state.correctlyTyped.length - this.state.correctlyTyped.split(" ").length +1),
+        wpm: this.state.correctlyTyped.split(" ").length -1,
+      })
+    }
+  }
+
+  playOutro() {
+    let modal = document.getElementById("outro-modal");
+    modal.classList.toggle("hidden");
   }
    
   async validateInput() {
@@ -42,9 +64,10 @@ export default class App extends Component {
   editWords() {
     const { inputValue, activeWord, isValidInput} = this.state;
     if(isValidInput){
-      this.setState({
-        words: activeWord.slice(inputValue.length) +
-        Sample.slice(Sample.indexOf(activeWord) + activeWord.length)
+      this.setState(
+        function(prevState){
+        return {words: activeWord.slice(inputValue.length) +
+        this.state.words.slice(this.state.words.indexOf(" "))}
       })
     }
     
@@ -64,17 +87,24 @@ export default class App extends Component {
     
   }
    handleChange(event) {
+     if(!this.state.started){
+      this.setState({started: true})
+      this.timer = setInterval(() => {
+        this.setState({
+          time: (this.state.time -1)
+        })
+      }, 1000);
+     }
     if(event.target.value.at(-1) !== " "){
       this.setState({inputValue: event.target.value}) 
-      
     }
     else{
       this.submitInput().then( () => {
-        if(this.state.inputValue.length === 0){
-          this.setState(
-            {words: this.state.words.slice(this.state.activeWord.length + 1)}
-          )
-        }
+        // if(this.state.inputValue.length === 0){
+        //   this.setState(
+        //     // {words: this.state.words.slice(this.state.activeWord.length + 1)}
+        //   )
+        // }
         this.setState({
           words: this.state.words.trimStart()
         })
@@ -111,12 +141,12 @@ export default class App extends Component {
       <div className="container container-app">
         <PageHeader />
         <section className="section-metrics">
-          <Metric value={60} unit={"seconds"} />
+          <Metric value={this.state.time} unit={"seconds"} />
           <Metric
-            value={ 0}
+            value={this.state.wpm}
             unit={"words/min"}
           />
-          <Metric value={0} unit={"chars/min"} />
+          <Metric value={this.state.cpm} unit={"chars/min"} />
         </section> 
         <section className="input-area">
           <Words class={"typed"} words={this.state.typed} />
@@ -124,6 +154,8 @@ export default class App extends Component {
           <InputArea  validState={this.state.isValidInput} inputValue={this.state.inputValue} handleChange={this.handleChange}/>
           <Words class={"untyped"} words={this.state.words} />
         </section>
+
+        <Outro wpm={this.state.wpm} cpm={this.state.cpm} />
       </div>
     );
   }
