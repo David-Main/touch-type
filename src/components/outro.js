@@ -10,7 +10,7 @@ function Outro(props) {
                     <p className="cpm result"><span className="value">{cpm}</span><span className="unit">chars/min</span></p>
                     <p className="accuracy result"><span className="value">{accuracy}%</span><span className="unit">accuracy</span></p>
                 </div>
-                <button className="btn btn-reload">try again</button>
+                <button className="btn btn-reload" onClick={() => {window.location.reload()}}>try again</button>
             </section>
     </div>
     )

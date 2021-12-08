@@ -12,28 +12,34 @@ export default class App extends Component {
 
     this.state = { 
       started: false,
-      words: Sample,
+      words: "",
       inputValue: "",
       isValidInput: false,
       activeWord: "",
       typed: "",
       lastTyped: true,
       correctlyTyped: "",
-      time: 60,
+      time: 120,
       cpm: 0,
       wpm: 0,
+      wordBatch : 8,
     }; 
     let timer;
     this.handleChange = this.handleChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.editWords = this.editWords.bind(this);
+    this.getWords = this.getWords.bind(this);
   } 
   componentDidMount(){
-    this.setState({activeWord: this.state.words.split(" ")[0]})
+    this.setState({ 
+      activeWord: Sample.split(" ")[0],
+      words: this.getWords(),
+    })
+    
   }
   componentDidUpdate(prevProps, prevState){
     if(this.state.time === 0){
-      clearInterval(this.timer)
+      clearInterval(this.timer) 
       this.playOutro();
     }
     if(prevState.inputValue !== this.state.inputValue){
@@ -45,13 +51,26 @@ export default class App extends Component {
       this.setState({
         correctlyTyped: this.state.correctlyTyped + prevState.activeWord + " ",
         cpm: (this.state.correctlyTyped.length - this.state.correctlyTyped.split(" ").length +1),
-        wpm: this.state.correctlyTyped.split(" ").length -1,
+        wpm: this.state.correctlyTyped.split(" ").length ,
+      })
+    }
+    if(this.state.words.split(" ").length < 4){
+      this.setState({
+        words: this.state.words + this.getWords()
       })
     }
   }
 
+  getWords() {
+    let w = Sample.split(" ").slice(this.state.wordBatch - 8, this.state.wordBatch).join(" ").trimStart();
+    this.setState({wordBatch: this.state.wordBatch+8})
+    return w;
+  }
+
   playOutro() {
     let modal = document.getElementById("outro-modal");
+    let iSection = document.querySelector(".input-area");
+    iSection.classList.add("hidden");
     modal.classList.toggle("hidden");
   }
    

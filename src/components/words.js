@@ -5,13 +5,13 @@ const Words = (props) => {
         if (word.length > 0) {
           if (!word.indexOf("/*0*/")) {
             return (
-              <span key={index} className="word wrong">
+              <span key={Math.random()*10 + index + new Date().getTime().toString()} className="word wrong">
                 {word.replace("/*0*/", "")}
               </span>
             );
           }
           return (
-            <span key={index} className="word">
+            <span key={Math.random()*10 + index + new Date().getTime().toString()} className="word">
               {word}
             </span>
           );
