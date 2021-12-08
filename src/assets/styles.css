@@ -1,4 +1,4 @@
-*{
+:root {
   /* 
     Variables
   */
@@ -7,12 +7,35 @@
   --red: #b30439;
   --blue-black: #1e2e4b;
   --green: #01743e;
+  --yellow: #ffb109;
 
-  --white1: #f7f7f7;
+  --white1: #e4e4e4;
   --gray1: #9c9fa1;
   --dark1: #2f3741;
 
   --word-spacing: 0.6em;
+}
+:root.dark-mode {
+  /* 
+    Variables
+  */
+  --base-font-size: 1rem; 
+
+  --red: #b30439;
+  --blue-black: #0c50ce;
+  --green: #01743e;
+  --yellow: #ffb109;
+ 
+  --white1: #2f3741;
+
+  --gray1: #9c9fa1; 
+ 
+  --dark1: #e4e4e4;
+
+}
+
+*{
+  
 
   font-family: "montserrat", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
@@ -78,15 +101,21 @@ header h2 {
   font-weight: 500;
 }
 
-
+.container-input-area{
+  position: relative;
+  width: 100%;
+  padding: 0 0.4rem;
+  overflow: hidden;
+  height: max-content;
+}
 .input-area {
     display: grid;
     grid-template-columns: 1fr auto 50%;
-    font-size: 2rem;;
-    margin: 4rem 0;
+    font-size: 2rem;
     overflow: hidden;
-    width: 98%;
-    box-shadow: 0 0 15px -5px var(--blue-black);
+    margin: 5rem 0; 
+    width: 100%;
+    box-shadow: 0 0 13px -5px var(--dark1);
     padding: 2rem 0 ;
     border-radius: 3px;
     font-family: "inconsolata Expanded";
@@ -106,13 +135,48 @@ header h2 {
   font: inherit;
   text-align: right;
   color: #324b7a;
+  background-color: transparent;
   border: none;
   outline: none;
 }
 #typing.wrong {
-  text-decoration-color: #b30439;
-
+  text-decoration-color: var(--red);
 }
+@keyframes hang {
+  0%{
+    top: 5%;
+  }
+  50%{
+    top: 15%;
+  }
+  to{
+   top: 5%;
+  }
+}
+.input-indicator {
+  position: absolute;
+  font-size: 1rem;
+  font-weight:  600;
+  background-color: var(--yellow);
+  padding: 0.8em 1.2em;
+  left: 41%;
+  animation-name: hang; 
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite; 
+}
+.input-indicator::before{
+  content: "";
+  position: absolute;
+  /* border: 1px solid salmon;  */
+  border-top-left-radius: 5rem;
+  width: 1.22rem;
+  height: 1.22rem;
+  left: 47%;
+  bottom: -0.5em;
+  background-color: var(--yellow);
+  transform: rotate(45deg);
+}
+
 .input-area .untyped {
   max-width: 48%;
   display: flex;

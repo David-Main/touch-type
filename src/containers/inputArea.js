@@ -22,15 +22,23 @@ function InputArea(props) {
   }
 
   return ( 
-    <input
-          type="text"
-          name="typing"
-          id="typing" 
-          tabIndex="1" 
-          value={inputValue}
-          className={validation}
-          onChange={handleChange}
-        />
+    <React.Fragment>
+      <p className="input-indicator">Start typing here</p>
+      <input
+            type="text"
+            name="typing"
+            id="typing"
+            tabIndex="1"
+            autoCapitalize="false"
+            autoComplete="false"
+            autoSave="false"
+            autoCorrect="false"
+            autoFocus="true"
+            value={inputValue}
+            className={validation}
+            onChange={handleChange}
+          />
+    </React.Fragment>
   )
 }
 

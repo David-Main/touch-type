@@ -113,6 +113,7 @@ export default class App extends Component {
           time: (this.state.time -1)
         })
       }, 1000);
+      document.querySelector(".input-indicator").classList.add("hidden");
      }
     if(event.target.value.at(-1) !== " "){
       this.setState({inputValue: event.target.value}) 
@@ -167,12 +168,14 @@ export default class App extends Component {
           />
           <Metric value={this.state.cpm} unit={"chars/min"} />
         </section> 
-        <section className="input-area">
-          <Words class={"typed"} words={this.state.typed} />
+        <div className="container-input-area">
+          <section className="input-area">
+            <Words class={"typed"} words={this.state.typed} />
           
-          <InputArea  validState={this.state.isValidInput} inputValue={this.state.inputValue} handleChange={this.handleChange}/>
-          <Words class={"untyped"} words={this.state.words} />
-        </section>
+            <InputArea  validState={this.state.isValidInput} inputValue={this.state.inputValue} handleChange={this.handleChange}/>
+            <Words class={"untyped"} words={this.state.words} />
+          </section>
+        </div>
 
         <Outro wpm={this.state.wpm} cpm={this.state.cpm} />
       </div>
