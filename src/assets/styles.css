@@ -265,6 +265,10 @@ header h2 {
 footer {
   color: var(--dark1);
   margin-top: 4rem;
+  text-align: center;
+}
+footer h4 {
+  line-height: 1.3rem;
 }
 footer a {
   color: var(--red); 

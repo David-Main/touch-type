@@ -182,6 +182,8 @@ export default class App extends Component {
         </div>
         <footer>
           <h4>Developed by <a href="http://github.com/David-Main" target="blank">David Mainoo</a></h4>
+          <h4>Background obtained from <a href="https://www.design.svgbackgrounds.com/">svgbackgrounds</a></h4>
+          <h4>Text generator from node module: <a href=" https://www.npmjs.com/package/txtgen">txtgen</a></h4>
         </footer>
         <Outro wpm={this.state.wpm} cpm={this.state.cpm} />
       </div>
