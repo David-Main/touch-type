@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import PageHeader from "../elements/Header"; 
 import Metric from "../components/metric"
 import Words from "../components/words";
-import InputArea from "./inputArea";
-import Sample from "../data/words"; 
+import InputArea from "./inputArea"; 
 import Outro from "../components/outro";
+const txtgen = require("txtgen");
+
+ 
+
 
 export default class App extends Component {
   constructor(props) {
@@ -19,23 +22,28 @@ export default class App extends Component {
       typed: "",
       lastTyped: true,
       correctlyTyped: "",
-      time: 120,
+      time: 60,
       cpm: 0,
-      wpm: 0,
-      wordBatch : 8,
+      wpm: 0, 
+      darkMode: true,
     }; 
-    let timer;
     this.handleChange = this.handleChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.editWords = this.editWords.bind(this);
-    this.getWords = this.getWords.bind(this);
+    this.getWords = this.getWords.bind(this); 
+    this.setWords = this.setWords.bind(this); 
   } 
-  componentDidMount(){
+  async setWords() {
     this.setState({ 
-      activeWord: Sample.split(" ")[0],
-      words: this.getWords(),
+        words: this.getWords(),
+      })
+  }
+  componentDidMount(){
+    this.setWords().then( () => {
+      this.setState({
+        activeWord: this.state.words.split(" ")[0],
+      })
     })
-    
   }
   componentDidUpdate(prevProps, prevState){
     if(this.state.time === 0){
@@ -56,15 +64,12 @@ export default class App extends Component {
     }
     if(this.state.words.split(" ").length < 4){
       this.setState({
-        words: this.state.words + this.getWords()
+        words: this.state.words + " " + this.getWords()
       })
     }
-  }
-
-  getWords() {
-    let w = Sample.split(" ").slice(this.state.wordBatch - 8, this.state.wordBatch).join(" ").trimStart();
-    this.setState({wordBatch: this.state.wordBatch+8})
-    return w;
+  } 
+  getWords() { 
+    return txtgen.sentence();
   }
 
   playOutro() {
@@ -151,15 +156,18 @@ export default class App extends Component {
         }
       })
     }
-  }
-                       
-  
+  } 
 
   
   render() {
     return (
-      <div className="container container-app">
+      <div className={this.state.darkMode ? "container container-app dark-mode" : "container container-app"}>
+
         <PageHeader />
+      <input type="checkbox" name="dark-switch" onchange={() => {
+        this.setState( {darkMode: !this.state.darkMode})
+      }}  id="dark-switch" />
+
         <section className="section-metrics">
           <Metric value={this.state.time} unit={"seconds"} />
           <Metric

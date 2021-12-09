@@ -6,6 +6,7 @@ const PageHeader = () => {
         <h2 className="title title-main">Test your typing skills</h2>
         <div className="seperator"></div>
       </header>
+
     </>
   );
 };

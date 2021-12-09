@@ -25,15 +25,14 @@ function InputArea(props) {
     <React.Fragment>
       <p className="input-indicator">Start typing here</p>
       <input
-            type="text"
-            name="typing"
+            type="text" 
             id="typing"
             tabIndex="1"
-            autoCapitalize="false"
-            autoComplete="false"
-            autoSave="false"
-            autoCorrect="false"
-            autoFocus="true"
+            autoCapitalize="off"
+            autoComplete="off"
+            autoSave="off"
+            autoCorrect="off"
+            autoFocus 
             value={inputValue}
             className={validation}
             onChange={handleChange}
