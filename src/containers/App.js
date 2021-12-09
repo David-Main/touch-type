@@ -24,8 +24,7 @@ export default class App extends Component {
       correctlyTyped: "",
       time: 60,
       cpm: 0,
-      wpm: 0, 
-      darkMode: true,
+      wpm: 0,  
     }; 
     this.handleChange = this.handleChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
@@ -161,12 +160,9 @@ export default class App extends Component {
   
   render() {
     return (
-      <div className={this.state.darkMode ? "container container-app dark-mode" : "container container-app"}>
+      <div className= "container container-app ">
 
-        <PageHeader />
-      <input type="checkbox" name="dark-switch" onchange={() => {
-        this.setState( {darkMode: !this.state.darkMode})
-      }}  id="dark-switch" />
+        <PageHeader /> 
 
         <section className="section-metrics">
           <Metric value={this.state.time} unit={"seconds"} />
@@ -184,7 +180,9 @@ export default class App extends Component {
             <Words class={"untyped"} words={this.state.words} />
           </section>
         </div>
-
+        <footer>
+          <h4>Developed by <a href="http://github.com/David-Main" target="blank">David Mainoo</a></h4>
+        </footer>
         <Outro wpm={this.state.wpm} cpm={this.state.cpm} />
       </div>
     );
